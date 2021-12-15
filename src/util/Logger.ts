@@ -11,6 +11,7 @@
 import Chalk from 'chalk';
 import Crypit from 'crypit';
 import FS from 'fs';
+import DevTools from '../index';
 
 /**
  * Imagine NOT having fancy logging...
@@ -18,11 +19,13 @@ import FS from 'fs';
 export default class Logger {
 
     fileName: string = null!;
+    parent: DevTools = null!;
     crypit: Crypit = null!;
 
-    constructor () {
-        Logger.fancy();
+    constructor (parent: DevTools) {
+        this.parent = parent;
         this.crypit = new Crypit();
+        Logger.fancy();
 
         let d = new Date();
         if (!FS.existsSync(process.cwd() + '/logs/')) FS.mkdirSync(process.cwd() + '/logs/');
@@ -35,33 +38,41 @@ export default class Logger {
     }
 
     log (...message: any) {
-        console.log(Chalk.whiteBright('[log]'), ...message);
+        console.log(Chalk.whiteBright('[log]'), this.sanitize(...message));
         this.write(`[log @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     warn (...message: any) {
-        console.warn(Chalk.yellowBright('[warn]'), ...message);
+        console.warn(Chalk.yellowBright('[warn]'), this.sanitize(...message));
         this.write(`[warn @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     error (...message: any) {
-        console.error(Chalk.redBright('[error]'), ...message);
+        console.error(Chalk.redBright('[error]'), this.sanitize(...message));
         this.write(`[error @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     send (...message: any) {
-        console.error(Chalk.greenBright('[SEND]'), ...message);
+        console.error(Chalk.greenBright('[SEND]'), this.sanitize(...message));
         this.write(`[SEND @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     receive (...message: any) {
-        console.error(Chalk.cyanBright('[RECEIVE]'), ...message);
+        console.error(Chalk.cyanBright('[RECEIVE]'), this.sanitize(...message));
         this.write(`[RECEIVE @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     http (...message: any) {
-        console.error(Chalk.blueBright('[HTTP]'), ...message);
+        console.error(Chalk.blueBright('[HTTP]'), this.sanitize(...message));
         this.write(`[HTTP @ ${Logger.date()}] ${Logger.format(...message)}`);
+    }
+
+    private sanitize (...message: string[]) {
+        let array: string[] = [];
+        for ( let i = 0; i < message.length; ++i ) {
+            array.push(message[i].replace(new RegExp(this.parent['token'].replace(/\./g, "\\.")), '*'.repeat(54)));
+        }
+        return array;
     }
 
     private write (content: string, set: boolean = false) {

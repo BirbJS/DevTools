@@ -1,2 +1,4 @@
 # DevTools
-Ease the pain of developing Birb.JS with this revolutionary package! Pay in 3 easy payments of $9.99!
+This is the DevTools package for the [Birb.JS](https://github.com/BirbJS/Birb) package. It is only used to help with the development of Birb.JS. **Do not install this package unless you're working on Birb.JS.**
+
+Install: `npm install --save-dev @birbjs/devtools`

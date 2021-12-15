@@ -13,9 +13,11 @@ import Logger from './util/Logger';
 class DevTools {
 
     logger: Logger = null!;
+    private token: string = null!;
 
-    constructor () {
-        this.logger = new Logger();
+    constructor (token: string) {
+        this.token = token;
+        this.logger = new Logger(this);
     }
 
 }
