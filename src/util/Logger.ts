@@ -39,32 +39,32 @@ export default class Logger {
 
     log (...message: any) {
         console.log(Chalk.whiteBright('[log]'), this.sanitize(...message));
-        this.write(`[log @ ${Logger.date()}] ${Logger.format(...message)}`);
+        this.write(`[log @ ${Logger.date()}] ${this.sanitize(...message)}`);
     }
 
     warn (...message: any) {
         console.warn(Chalk.yellowBright('[warn]'), this.sanitize(...message));
-        this.write(`[warn @ ${Logger.date()}] ${Logger.format(...message)}`);
+        this.write(`[warn @ ${Logger.date()}] ${this.sanitize(...message)}`);
     }
 
     error (...message: any) {
         console.error(Chalk.redBright('[error]'), this.sanitize(...message));
-        this.write(`[error @ ${Logger.date()}] ${Logger.format(...message)}`);
+        this.write(`[error @ ${Logger.date()}] ${this.sanitize(...message)}`);
     }
 
     send (...message: any) {
         console.error(Chalk.greenBright('[send]'), this.sanitize(...message));
-        this.write(`[send @ ${Logger.date()}] ${Logger.format(...message)}`);
+        this.write(`[send @ ${Logger.date()}] ${this.sanitize(...message)}`);
     }
 
     receive (...message: any) {
         console.error(Chalk.cyanBright('[receive]'), this.sanitize(...message));
-        this.write(`[receive @ ${Logger.date()}] ${Logger.format(...message)}`);
+        this.write(`[receive @ ${Logger.date()}] ${this.sanitize(...message)}`);
     }
 
     http (...message: any) {
         console.error(Chalk.blueBright('[http]'), this.sanitize(...message));
-        this.write(`[http @ ${Logger.date()}] ${Logger.format(...message)}`);
+        this.write(`[http @ ${Logger.date()}] ${this.sanitize(...message)}`);
     }
 
     private sanitize (...message: string[]) {
