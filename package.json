@@ -1,0 +1,35 @@
+{
+  "name": "@birbjs/devtools",
+  "version": "1.0.0",
+  "description": "Ease the pain of developing Birb.JS with this revolutionary package! Pay in 3 easy payments of $9.99!",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "private": false,
+  "scripts": {
+    "test": "ls",
+    "publish-the-awesomeness": "tsc && npm run files && node test.js && cd dist/ && npm publish --dry-run",
+    "publish-release": "tsc && npm run files && cd dist/ && npm publish --access public",
+    "files": "copyfiles package.json package-lock.json tsconfig.json .npmignore LICENSE README.md dist",
+    "build": "tsc --build --verbose && npm run files"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BirbJS/DevTools.git"
+  },
+  "author": "knokbak",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/BirbJS/DevTools/issues"
+  },
+  "homepage": "https://github.com/BirbJS/DevTools#readme",
+  "devDependencies": {
+    "@types/node": "^16.11.13",
+    "copyfiles": "^2.4.1",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "birb": "^1.0.0-pre.1",
+    "chalk": "4.1.2",
+    "crypit": "^1.0.10"
+  }
+}
