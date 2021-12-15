@@ -68,11 +68,15 @@ export default class Logger {
     }
 
     private sanitize (...message: string[]) {
-        let array: string[] = [];
-        for ( let i = 0; i < message.length; ++i ) {
-            array.push(message[i].replace(new RegExp(this.parent['token'].replace(/\./g, "\\.")), '*'.repeat(54)));
+        if (this.parent.token) {
+            let array: string[] = [];
+            for ( let i = 0; i < message.length; ++i ) {
+                array.push(message[i].replace(new RegExp(this.parent.token.replace(/\./g, "\\.")), '*'.repeat(54)));
+            }
+            return array;
+        } else {
+            return message;
         }
-        return array;
     }
 
     private write (content: string, set: boolean = false) {

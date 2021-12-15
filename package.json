@@ -1,6 +1,6 @@
 {
   "name": "@birbjs/devtools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ease the pain of developing Birb.JS with this revolutionary package! Pay in 3 easy payments of $9.99!",
   "main": "index.js",
   "types": "index.d.ts",

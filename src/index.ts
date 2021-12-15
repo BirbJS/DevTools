@@ -13,11 +13,15 @@ import Logger from './util/Logger';
 class DevTools {
 
     logger: Logger = null!;
-    private token: string = null!;
+    token: string | null = null;
 
-    constructor (token: string) {
-        this.token = token;
+    constructor (token?: string) {
+        this.token = token ?? null;
         this.logger = new Logger(this);
+    }
+
+    setToken (token: string) {
+        this.token = token;
     }
 
 }
