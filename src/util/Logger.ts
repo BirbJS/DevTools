@@ -53,18 +53,18 @@ export default class Logger {
     }
 
     send (...message: any) {
-        console.error(Chalk.greenBright('[SEND]'), this.sanitize(...message));
-        this.write(`[SEND @ ${Logger.date()}] ${Logger.format(...message)}`);
+        console.error(Chalk.greenBright('[send]'), this.sanitize(...message));
+        this.write(`[send @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     receive (...message: any) {
-        console.error(Chalk.cyanBright('[RECEIVE]'), this.sanitize(...message));
-        this.write(`[RECEIVE @ ${Logger.date()}] ${Logger.format(...message)}`);
+        console.error(Chalk.cyanBright('[receive]'), this.sanitize(...message));
+        this.write(`[receive @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     http (...message: any) {
-        console.error(Chalk.blueBright('[HTTP]'), this.sanitize(...message));
-        this.write(`[HTTP @ ${Logger.date()}] ${Logger.format(...message)}`);
+        console.error(Chalk.blueBright('[http]'), this.sanitize(...message));
+        this.write(`[http @ ${Logger.date()}] ${Logger.format(...message)}`);
     }
 
     private sanitize (...message: string[]) {
@@ -73,9 +73,9 @@ export default class Logger {
             for ( let i = 0; i < message.length; ++i ) {
                 array.push(message[i].replace(new RegExp(this.parent.token.replace(/\./g, "\\.")), '*'.repeat(54)));
             }
-            return array;
+            return Logger.format(array);
         } else {
-            return message;
+            return Logger.format(message);
         }
     }
 
