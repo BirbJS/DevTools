@@ -37,45 +37,50 @@ export default class Logger {
         process.on('SIGINT', this.cleanupSIGINT.bind(this));
     }
 
+    debug (...message: any) {
+        console.debug(Chalk.gray('[debug]'), this.sanitize(Chalk.gray, ...message));
+        this.write(`[debug @ ${Logger.date()}] ${this.sanitize(null, ...message)}`);
+    }
+
     log (...message: any) {
-        console.log(Chalk.whiteBright('[log]'), this.sanitize(...message));
-        this.write(`[log @ ${Logger.date()}] ${this.sanitize(...message)}`);
+        console.log(Chalk.whiteBright('[log]'), this.sanitize(Chalk.whiteBright, ...message));
+        this.write(`[log @ ${Logger.date()}] ${this.sanitize(null, ...message)}`);
     }
 
     warn (...message: any) {
-        console.warn(Chalk.yellowBright('[warn]'), this.sanitize(...message));
-        this.write(`[warn @ ${Logger.date()}] ${this.sanitize(...message)}`);
+        console.warn(Chalk.yellowBright('[warn]'), this.sanitize(Chalk.yellowBright, ...message));
+        this.write(`[warn @ ${Logger.date()}] ${this.sanitize(null, ...message)}`);
     }
 
     error (...message: any) {
-        console.error(Chalk.redBright('[error]'), this.sanitize(...message));
-        this.write(`[error @ ${Logger.date()}] ${this.sanitize(...message)}`);
+        console.error(Chalk.redBright('[error]'), this.sanitize(Chalk.redBright, ...message));
+        this.write(`[error @ ${Logger.date()}] ${this.sanitize(null, ...message)}`);
     }
 
     send (...message: any) {
-        console.error(Chalk.greenBright('[send]'), this.sanitize(...message));
-        this.write(`[send @ ${Logger.date()}] ${this.sanitize(...message)}`);
+        console.error(Chalk.greenBright('[send]'), this.sanitize(Chalk.gray, ...message));
+        this.write(`[send @ ${Logger.date()}] ${this.sanitize(null, ...message)}`);
     }
 
     receive (...message: any) {
-        console.error(Chalk.cyanBright('[receive]'), this.sanitize(...message));
-        this.write(`[receive @ ${Logger.date()}] ${this.sanitize(...message)}`);
+        console.error(Chalk.cyanBright('[receive]'), this.sanitize(Chalk.gray, ...message));
+        this.write(`[receive @ ${Logger.date()}] ${this.sanitize(null, ...message)}`);
     }
 
     http (...message: any) {
-        console.error(Chalk.blueBright('[http]'), this.sanitize(...message));
-        this.write(`[http @ ${Logger.date()}] ${this.sanitize(...message)}`);
+        console.error(Chalk.blueBright('[http]'), this.sanitize(Chalk.gray, ...message));
+        this.write(`[http @ ${Logger.date()}] ${this.sanitize(null, ...message)}`);
     }
 
-    private sanitize (...message: string[]) {
+    private sanitize (fn: ((...message: any[]) => string) | null, ...message: string[]): string {
         if (this.parent.token) {
             let array: string[] = [];
             for ( let i = 0; i < message.length; ++i ) {
                 array.push(message[i].replace(new RegExp(this.parent.token.replace(/\./g, "\\.")), '*'.repeat(54)));
             }
-            return Logger.format(array);
+            return fn ? fn(Logger.format(array)) : Logger.format(array);
         } else {
-            return Logger.format(message);
+            return fn ? fn(Logger.format(message)) : Logger.format(message);
         }
     }
 
