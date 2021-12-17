@@ -76,11 +76,11 @@ export default class Logger {
         if (this.parent.token) {
             let array: string[] = [];
             for ( let i = 0; i < message.length; ++i ) {
-                array.push(message[i].replace(new RegExp(this.parent.token.replace(/\./g, "\\.")), '*'.repeat(54)));
+                array.push(message[i].replace(new RegExp(this.parent.token.replace(/\./g, "\\.")), '•'.repeat(54)));
             }
-            return fn ? fn(Logger.format(array)) : Logger.format(array);
+            return fn ? fn(Logger.format(true, array)) : Logger.format(false, array);
         } else {
-            return fn ? fn(Logger.format(message)) : Logger.format(message);
+            return fn ? fn(Logger.format(true, message)) : Logger.format(false, message);
         }
     }
 
@@ -99,15 +99,16 @@ export default class Logger {
         process.exit(2);
     }
 
+    private static format (colorRedacted: boolean, ...message: any[]) {
+        let content = '';
+        for ( let i = 0; i < message.length; ++i ) content += message[i] + '\n';
+        if (colorRedacted) return content.replace('•'.repeat(54), Chalk.bgRedBright('•'.repeat(54)));
+        return content;
+    }
+
     private static date () {
         let d = new Date();
         return `${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}-${d.getMilliseconds()}`;
-    }
-
-    private static format (...message: any[]) {
-        let content = '';
-        for ( let i = 0; i < message.length; ++i ) content += message[i] + '\n';
-        return content;
     }
 
     /**
