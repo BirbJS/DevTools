@@ -195,11 +195,11 @@ async function build () {
         for ( let i = 0; i < params.length; ++i ) {
             let param = params[i];
             let row: string[] = [
-                `${param.name}`,
-                `${formatType(param.type)}`,
-                `${param.comment?.shortText ?? ''}`,
+                `${param.name || ' '}`,
+                `${formatType(param.type) || 'Object'}`,
+                `${param.comment?.shortText || ' '}`,
                 `${param.flags.isOptional ? 'true' : 'false'}`,
-                `${param.defaultValue ?? ''}`
+                `${param.defaultValue ?? '*none*'}`
             ];
             rows.push(`| ${row.join(' | ')} |`);
         }
