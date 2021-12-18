@@ -159,7 +159,7 @@ async function build () {
                 for ( let i = 0; i < type.types.length; ++i ) {
                     types.push(formatType(type.types[i]));
                 }
-                return types.join(' | ');
+                return types.join(' or ');
             }
             default: {
                 if (type.name) return `${type.name}`;
