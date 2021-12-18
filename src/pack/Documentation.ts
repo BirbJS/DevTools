@@ -161,11 +161,23 @@ async function build () {
                 }
                 return types.join(' or ');
             }
+            case 'literal': {
+                return typeMoreInfo(`${type.value}`);
+            }
+            case 'intrinsic': {
+                return typeMoreInfo(`${type.name}`);
+            }
             default: {
-                if (type.name) return `${type.name}`;
-                    else return 'Object';
+                return typeMoreInfo(type.name || 'Object');
             }
         }
+    }
+
+    function typeMoreInfo (name: string): string {
+        let mdn = ['object', 'string', 'number', 'boolean', 'symbol', 'null', 'undefined'];
+        if (mdn.includes(name.toLowerCase())) {
+            return `*[${name}](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/${name})*`;
+        } else return name;
     }
 
     function kindStringToUrl (kind: string): string | null {
