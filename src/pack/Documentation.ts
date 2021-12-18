@@ -159,7 +159,7 @@ async function build () {
                 for ( let i = 0; i < type.types.length; ++i ) {
                     types.push(formatType(type.types[i]));
                 }
-                return types.join(' \| ');
+                return types.join(' \\| ');
             }
             case 'literal': {
                 return typeMoreInfo(`${type.value}`);
@@ -213,7 +213,7 @@ async function build () {
                 `${param.flags.isOptional ? 'true' : 'false'}`,
                 `${param.defaultValue ?? '*none*'}`
             ];
-            rows.push(`| ${row.join(' | ')} |`);
+            rows.push(`| ${row.join(' | ').replace(/(\r\n|\n|\r)/gm, ' ')} |`);
         }
         return rows.join('\n') + '\n\n';
     }
